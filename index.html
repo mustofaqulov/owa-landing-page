@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open Web Academy — IT kurslar</title>
+    <meta name="description" content="Open Web Academy — IT kasblarni o'rganing. Frontend, Backend, Mobile, Design kurslar.">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="icon" href="https://owa.uz/owa-logo.png" type="image/png">
+</head>
+<body>
+
+    <!-- Decorative BG -->
+    <div class="bg-decor">
+        <svg class="bg-decor__svg" viewBox="0 0 400 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M-50 300 Q 50 200, 0 100 Q -50 0, 50 -50" stroke="rgba(253,72,45,0.07)" stroke-width="80" fill="none" stroke-linecap="round"/>
+            <path d="M-100 500 Q 0 400, -50 300 Q -100 200, 0 100" stroke="rgba(253,72,45,0.04)" stroke-width="80" fill="none" stroke-linecap="round"/>
+        </svg>
+    </div>
+
+    <!-- Top Slider -->
+    <section class="top-slider anim-fade">
+        <div class="container">
+            <div class="carousel" id="carousel">
+                <div class="carousel__track" id="carouselTrack">
+                    <div class="carousel__slide">
+                        <div class="slide-card" style="background:#E1CEFB">
+                            <div class="slide-card__info">
+                                <h2 class="slide-card__title">Frontend</h2>
+                                <p class="slide-card__duration">3 kun 2 soat / 8 oy</p>
+                            </div>
+                            <img src="https://api.owa.uz/uploads/courses/56e68d8f-b4f1-4a45-8a83-62b2c5c808dc.png" alt="Frontend kursi" class="slide-card__img">
+                        </div>
+                    </div>
+                    <div class="carousel__slide">
+                        <div class="slide-card" style="background:#42B8AC">
+                            <div class="slide-card__info">
+                                <h2 class="slide-card__title">Back-end</h2>
+                                <p class="slide-card__duration">3 kun 2 soat / 8 oy</p>
+                            </div>
+                            <img src="https://api.owa.uz/uploads/courses/242c4b26-a4b4-437d-a3a7-826178089588.png" alt="Back-end kursi" class="slide-card__img">
+                        </div>
+                    </div>
+                    <div class="carousel__slide">
+                        <div class="slide-card" style="background:#8974FF">
+                            <div class="slide-card__info">
+                                <h2 class="slide-card__title">Mobil dasturlash</h2>
+                                <p class="slide-card__duration">3 kun 2 soat / 6 oy</p>
+                            </div>
+                            <img src="https://api.owa.uz/uploads/courses/d630cf3c-f608-4c41-8d90-8ac05a72edc5.png" alt="Mobil dasturlash kursi" class="slide-card__img">
+                        </div>
+                    </div>
+                    <div class="carousel__slide">
+                        <div class="slide-card" style="background:#C8D3DB">
+                            <div class="slide-card__info">
+                                <h2 class="slide-card__title">UI/UX</h2>
+                                <p class="slide-card__duration">3 kun 2 soat / 8 oy</p>
+                            </div>
+                            <img src="https://api.owa.uz/uploads/courses/98e93e71-8489-4ed5-ab81-a7de62aec1ed.png" alt="UI/UX kursi" class="slide-card__img">
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel__dots" id="carouselDots">
+                    <button class="carousel__dot carousel__dot--active" data-index="0"></button>
+                    <button class="carousel__dot" data-index="1"></button>
+                    <button class="carousel__dot" data-index="2"></button>
+                    <button class="carousel__dot" data-index="3"></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero__inner">
+
+            <!-- Left: Form Side -->
+            <div class="hero__left anim-fade">
+                <a href="https://owa.uz" target="_blank" class="logo">
+                    <img src="https://owa.uz/owa-logo.png" alt="Open Web Academy" class="logo__img">
+                </a>
+
+                <h1 class="hero__title">
+                    <span class="hero__title--accent">IT KASBINI</span>
+                    <span> o'rganmoqchimisiz?</span>
+                </h1>
+                <p class="hero__desc">Raqamingizni qoldiring va biz barcha savollaringizga javob beramiz.</p>
+
+                <form id="heroForm" class="form" novalidate>
+                    <div class="form__group">
+                        <input type="text" id="name1" name="fullname" placeholder="Ismingiz" required>
+                        <span class="form__err">Ismingizni kiriting</span>
+                    </div>
+
+                    <div class="form__group">
+                        <div class="phone-input">
+                            <div class="phone-input__left">
+                                <span class="phone-input__code">+998</span>
+                            </div>
+                            <input type="tel" id="phone1" name="phone" placeholder="Telefon raqami" maxlength="12" required>
+                        </div>
+                        <span class="form__err">Telefon raqamingizni kiriting</span>
+                    </div>
+
+                    <button type="submit" class="form__btn form__btn--pulse" id="submitBtn">
+                        <span>Yuborish</span>
+                    </button>
+
+                </form>
+
+                <!-- Success State -->
+                <div class="form-success" id="formSuccess">
+                    <svg width="64" height="64" fill="none" viewBox="0 0 64 64"><circle cx="32" cy="32" r="32" fill="#FD482D" opacity=".1"/><path d="M20 32l9 9 16-18" stroke="#FD482D" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <h3>Rahmat!</h3>
+                    <p>Arizangiz qabul qilindi. Tez orada siz bilan bog'lanamiz.</p>
+                </div>
+            </div>
+
+            <!-- Right: Statistics -->
+            <div class="hero__right anim-fade" id="stats">
+                <div class="hero-stats">
+                    <div class="hero-stats__item">
+                        <strong class="stats__num" data-target="5">0</strong><span class="stats__plus">+</span>
+                        <p>Yillik tajriba</p>
+                    </div>
+                    <div class="hero-stats__item">
+                        <strong class="stats__num" data-target="1700">0</strong><span class="stats__plus">+</span>
+                        <p>Faol talabalar</p>
+                    </div>
+                    <div class="hero-stats__item">
+                        <strong class="stats__num" data-target="550">0</strong><span class="stats__plus">+</span>
+                        <p>Bitiruvchilar</p>
+                    </div>
+                    <div class="hero-stats__item">
+                        <strong class="stats__num" data-target="8">0</strong><span class="stats__plus">+</span>
+                        <p>Faol kurslar</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials anim-fade">
+        <div class="container">
+            <h2 class="testimonials__heading">Bitiruvchilarimiz natijalari</h2>
+            <div class="testimonials__grid">
+                <div class="tcard">
+                    <div class="tcard__player">
+                        <video src="video/Feruza.mp4" playsinline preload="metadata"></video>
+                        <button class="tcard__play" aria-label="Play">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 3l14 9-14 9V3z" fill="#fff"/></svg>
+                        </button>
+                    </div>
+                    <div class="tcard__badge">Grafik Dizayn</div>
+                    <h3 class="tcard__name">Feruza</h3>
+                    <p class="tcard__result">Kursning 2-oyidan daromad olmoqda</p>
+                </div>
+                <div class="tcard">
+                    <div class="tcard__player">
+                        <video src="video/Abdumalik.mp4" playsinline preload="metadata"></video>
+                        <button class="tcard__play" aria-label="Play">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 3l14 9-14 9V3z" fill="#fff"/></svg>
+                        </button>
+                    </div>
+                    <div class="tcard__badge">Grafik Dizayn</div>
+                    <h3 class="tcard__name">Husanov Abdumalik</h3>
+                    <p class="tcard__result">2-oyidan ishga qabul qilingan, hozir frilanser</p>
+                </div>
+                <div class="tcard">
+                    <div class="tcard__player">
+                        <video src="video/Ozodbek.mp4" playsinline preload="metadata"></video>
+                        <button class="tcard__play" aria-label="Play">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 3l14 9-14 9V3z" fill="#fff"/></svg>
+                        </button>
+                    </div>
+                    <div class="tcard__badge">Frontend</div>
+                    <h3 class="tcard__name">Ozodbek</h3>
+                    <p class="tcard__result">O'z ish joyi, kuchli portfolio va oylik daromadga ega</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sticky Mobile Button -->
+    <div class="sticky-btn" id="stickyBtn">
+        <button class="sticky-btn__inner" type="button" id="stickySubmit">Yuborish</button>
+    </div>
+
+    <!-- Floating Phone Button -->
+    <div class="float-phone" id="floatPhone">
+        <a href="tel:+998752200107" class="float-phone__btn" aria-label="Telefon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.362 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0122 16.92z" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <div class="float-phone__popup">
+            <span class="float-phone__label">Qo'ng'iroq qiling</span>
+            <a href="tel:+998752200107" class="float-phone__number">+998 75 220 01 07</a>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
