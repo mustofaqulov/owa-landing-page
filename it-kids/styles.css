@@ -62,6 +62,7 @@ input,button,select{font-family:inherit;font-size:inherit;border:none;outline:no
 .hero-stats__item:hover{box-shadow:var(--shadow);transform:translateY(-2px)}
 .hero-stats__item strong{font-size:2.6rem;font-weight:700;color:var(--primary);line-height:1}
 .hero-stats__item .stats__plus{font-size:1.5rem;font-weight:600;color:var(--primary)}
+.stats__row{display:flex;align-items:center}
 .hero-stats__item .stats__dash{font-size:1.5rem;font-weight:600;color:var(--primary);margin:0 2px}
 .hero-stats__item .stats__suffix{font-size:1rem;font-weight:600;color:var(--primary);margin-left:4px}
 .hero-stats__item p{font-size:.82rem;color:var(--text-muted);font-weight:400;margin-top:6px;width:100%}
@@ -118,6 +119,15 @@ input,button,select{font-family:inherit;font-size:inherit;border:none;outline:no
 .tcard__badge{font-size:.7rem;font-weight:600;color:var(--primary);background:var(--primary-bg);padding:4px 12px;border-radius:50px;width:fit-content;margin:14px 20px 0}
 .tcard__name{font-size:1.2rem;font-weight:700;color:var(--text);margin:10px 20px 4px}
 .tcard__result{font-size:.85rem;color:var(--text-sub);line-height:1.5;font-weight:400;padding:0 20px 20px}
+
+/* ---- Socials ---- */
+.socials{padding:16px 0 0}
+.socials__inner{display:flex;justify-content:center;align-items:center;gap:20px;flex-wrap:wrap}
+.socials__link{display:flex;align-items:center;gap:5px;color:var(--text-sub);font-size:.82rem;font-weight:400;transition:var(--tr)}
+.socials__link:hover{color:var(--primary)}
+.socials__link svg{flex-shrink:0}
+.socials__btn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;margin-top:12px;background:none;color:var(--primary);font-size:.88rem;font-weight:600;padding:12px 20px;border-radius:8px;border:1.5px solid var(--primary);transition:var(--tr)}
+.socials__btn:hover{background:var(--primary);color:#fff}
 
 /* ---- Floating Phone ---- */
 .float-phone{position:fixed;bottom:24px;right:24px;z-index:100;display:flex;align-items:center;gap:0}
