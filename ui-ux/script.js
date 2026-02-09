@@ -84,6 +84,36 @@ function initForm() {
     });
 }
 
+// Carousel
+function initCarousel() {
+    const track = document.getElementById("carouselTrack");
+    const dots = document.querySelectorAll(".carousel__dot");
+    if (!track || !dots.length) return;
+
+    let current = 0;
+    const total = dots.length;
+
+    function goTo(i) {
+        current = i;
+        track.style.transform = `translateX(-${i * 100}%)`;
+        dots.forEach((d, idx) => d.classList.toggle("carousel__dot--active", idx === i));
+    }
+
+    dots.forEach(d => d.addEventListener("click", () => goTo(+d.dataset.index)));
+    setInterval(() => goTo((current + 1) % total), 4000);
+
+    let startX = 0;
+    const carousel = document.getElementById("carousel");
+    carousel.addEventListener("touchstart", e => { startX = e.touches[0].clientX; }, { passive: true });
+    carousel.addEventListener("touchend", e => {
+        const diff = startX - e.changedTouches[0].clientX;
+        if (Math.abs(diff) > 50) {
+            if (diff > 0) goTo(Math.min(current + 1, total - 1));
+            else goTo(Math.max(current - 1, 0));
+        }
+    }, { passive: true });
+}
+
 // Counters
 function initCounters() {
     const nums = document.querySelectorAll(".stats__num[data-target]");
@@ -135,6 +165,7 @@ function initSticky() {
 document.addEventListener("DOMContentLoaded", () => {
     initPhone();
     initForm();
+    initCarousel();
     initCounters();
     initFadeIn();
     initSticky();
