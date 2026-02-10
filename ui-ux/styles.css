@@ -51,7 +51,7 @@ input,button,select{font-family:inherit;font-size:inherit;border:none;outline:no
 .hero__left{max-width:520px;display:flex;flex-direction:column;align-items:center;text-align:center}
 .logo{display:block;text-align:center;margin-bottom:24px}
 .logo__img{height:72px;width:auto;margin:0 auto}
-.hero__title{font-family:'Alexandria',sans-serif;font-size:36px;font-weight:500;line-height:100%;margin-bottom:12px;color:var(--text);text-align:center}
+.hero__title{font-family:'Alexandria',sans-serif;font-size:64px;font-weight:500;line-height:100%;margin-bottom:12px;color:var(--text);text-align:center}
 .hero__title--accent{color:var(--primary);display:block;font-weight:700}
 .hero__desc{font-family:'Alexandria',sans-serif;font-size:18px;color:var(--text-sub);margin-bottom:28px;line-height:28px;font-weight:400;text-align:center}
 
