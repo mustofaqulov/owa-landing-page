@@ -97,7 +97,7 @@ input,button,select{font-family:inherit;font-size:inherit;border:none;outline:no
 .form-success p{font-size:.92rem;color:var(--text-sub);font-weight:400}
 
 /* ---- Testimonials ---- */
-.testimonials{position:relative;z-index:1;padding:0 0 56px}
+.testimonials{position:relative;z-index:1;padding:64px 0 56px}
 .testimonials__heading{font-size:1.4rem;font-weight:700;color:var(--text);margin-bottom:20px;text-align:center}
 .testimonials__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 .testimonials__grid--single{grid-template-columns:340px;justify-content:start}
@@ -168,7 +168,7 @@ input,button,select{font-family:inherit;font-size:inherit;border:none;outline:no
     .hero__inner{grid-template-columns:1fr;gap:32px}
     .hero__left{max-width:100%;order:1}
     .hero__right{order:2;width:100%}
-    .hero-stats{grid-template-columns:repeat(2,1fr);gap:12px}
+    .hero-stats{grid-template-columns:repeat(2,1fr);gap:8px}
     .hero-stats__item{padding:24px 16px}
     .hero-stats__item strong{font-size:2rem}
     .hero__title{font-size:1.8rem}
@@ -197,7 +197,7 @@ input,button,select{font-family:inherit;font-size:inherit;border:none;outline:no
     .hero__desc{font-size:.88rem}
     .form__group>input,.phone-input{height:48px}
     .form__btn{height:50px;font-size:.92rem}
-    .hero-stats{gap:8px}
+    .hero-stats{gap:6px}
     .hero-stats__item{padding:20px 12px}
     .hero-stats__item strong{font-size:1.6rem}
     .hero-stats__item p{font-size:.75rem}
