@@ -44,7 +44,6 @@ function initForm() {
 
         const btn = form.querySelector("button[type=submit]");
         btn.classList.add("form__btn--loading");
-        btn.classList.remove("form__btn--pulse");
         btn.disabled = true;
 
         console.log("Lead:", {
