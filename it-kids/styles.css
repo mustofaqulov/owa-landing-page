@@ -614,7 +614,9 @@ button { cursor: pointer; }
     align-items: center;
   }
 
-  .formbox__fields {
+  .formbox form,
+  .formbox__fields,
+  .formbox .tg-btn {
     width: 100%;
   }
 
