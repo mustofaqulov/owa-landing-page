@@ -645,6 +645,10 @@ button { cursor: pointer; }
     background: rgba(34, 158, 217, 0.06);
   }
 
+  .tg-btn img {
+    filter: invert(52%) sepia(81%) saturate(1000%) hue-rotate(176deg) brightness(95%) contrast(90%);
+  }
+
   body { padding-bottom: 68px; }
 
   .sticky { display: none; }
