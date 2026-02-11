@@ -16,6 +16,7 @@
   --radius-sm: 16px;
   --radius-xs: 16px;
   --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-heading: 'Alexandria', 'Inter', sans-serif;
   --ease: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -57,6 +58,7 @@ button { cursor: pointer; }
 }
 
 .hero-title {
+  font-family: var(--font-heading);
   font-size: 48px;
   font-weight: 800;
   line-height: 1;
