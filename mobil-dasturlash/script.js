@@ -1,285 +1,308 @@
-document.addEventListener('DOMContentLoaded', () => {
-  initPhone();
-  initForm();
-  initCarousel();
-  initCounters();
-  initFadeIn();
-  initSticky();
-  initVideos();
+document.addEventListener('DOMContentLoaded', function () {
+  try { initCarousel(); } catch (e) { console.error(e); }
+  try { initPhone(); } catch (e) { console.error(e); }
+  try { initForm(); } catch (e) { console.error(e); }
+  try { initCounters(); } catch (e) { console.error(e); }
+  try { initSticky(); } catch (e) { console.error(e); }
+  try { initVideos(); } catch (e) { console.error(e); }
 });
 
-/* ========== PHONE FORMATTING ========== */
-function initPhone() {
-  const phoneInput = document.getElementById('phone');
-  if (!phoneInput) return;
-
-  phoneInput.addEventListener('input', (e) => {
-    let val = e.target.value.replace(/\D/g, '');
-    if (val.length > 9) val = val.slice(0, 9);
-
-    let formatted = '';
-    if (val.length > 0) formatted = val.slice(0, 2);
-    if (val.length > 2) formatted += ' ' + val.slice(2, 5);
-    if (val.length > 5) formatted += ' ' + val.slice(5, 7);
-    if (val.length > 7) formatted += ' ' + val.slice(7, 9);
-
-    e.target.value = formatted;
-  });
-
-  phoneInput.addEventListener('keydown', (e) => {
-    if (!/[\d\b]/.test(e.key) && !['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab'].includes(e.key) && !e.ctrlKey && !e.metaKey) {
-      e.preventDefault();
-    }
-  });
-}
-
-/* ========== FORM VALIDATION & SUBMIT ========== */
-function initForm() {
-  const form = document.getElementById('leadForm');
-  if (!form) return;
-
-  const nameInput = document.getElementById('fullname');
-  const phoneInput = document.getElementById('phone');
-  const nameError = document.getElementById('nameError');
-  const phoneError = document.getElementById('phoneError');
-  const formFields = document.getElementById('formFields');
-  const formSuccess = document.getElementById('formSuccess');
-  const submitBtn = form.querySelector('.form__btn');
-
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    let valid = true;
-
-    // Name validation
-    if (nameInput.value.trim().length < 2) {
-      nameInput.classList.add('form__input--error');
-      nameError.classList.add('form__error--visible');
-      valid = false;
-    } else {
-      nameInput.classList.remove('form__input--error');
-      nameError.classList.remove('form__error--visible');
-    }
-
-    // Phone validation
-    const digits = phoneInput.value.replace(/\D/g, '');
-    if (digits.length < 9) {
-      phoneInput.classList.add('form__input--error');
-      phoneError.classList.add('form__error--visible');
-      valid = false;
-    } else {
-      phoneInput.classList.remove('form__input--error');
-      phoneError.classList.remove('form__error--visible');
-    }
-
-    if (!valid) return;
-
-    // Disable button
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Yuborilmoqda...';
-
-    const data = {
-      fullname: nameInput.value.trim(),
-      phone: '+998' + digits,
-      source: 'meta_ads_instagram',
-      ts: new Date().toISOString()
-    };
-
-    console.log('Form submitted:', data);
-
-    // Show success
-    setTimeout(() => {
-      formFields.style.display = 'none';
-      formSuccess.classList.add('form__success--visible');
-    }, 600);
-  });
-
-  // Clear errors on input
-  nameInput.addEventListener('input', () => {
-    nameInput.classList.remove('form__input--error');
-    nameError.classList.remove('form__error--visible');
-  });
-
-  phoneInput.addEventListener('input', () => {
-    phoneInput.classList.remove('form__input--error');
-    phoneError.classList.remove('form__error--visible');
-  });
-}
-
-/* ========== CAROUSEL ========== */
+/* ═══════════ INFINITE CAROUSEL ═══════════ */
 function initCarousel() {
-  const track = document.querySelector('.carousel__track');
-  const dots = document.querySelectorAll('.carousel__dot');
-  if (!track || dots.length === 0) return;
+  var track = document.getElementById('carouselTrack');
+  var dotsWrap = document.getElementById('carouselDots');
+  if (!track || !dotsWrap) return;
 
-  const slides = track.querySelectorAll('.carousel__slide');
-  let current = 0;
-  let autoTimer;
-  let startX = 0;
-  let isDragging = false;
+  var origSlides = track.querySelectorAll('.carousel__slide');
+  var total = origSlides.length;
+  if (total === 0) return;
 
-  function goTo(index) {
-    current = (index + slides.length) % slides.length;
-    track.style.transform = `translateX(-${current * 100}%)`;
-    dots.forEach((d, i) => d.classList.toggle('carousel__dot--active', i === current));
+  // Clone first and last for infinite loop
+  var firstClone = origSlides[0].cloneNode(true);
+  var lastClone = origSlides[total - 1].cloneNode(true);
+  firstClone.classList.add('carousel__slide--clone');
+  lastClone.classList.add('carousel__slide--clone');
+
+  track.appendChild(firstClone);
+  track.insertBefore(lastClone, origSlides[0]);
+
+  // Now slides = [lastClone, 1, 2, 3, 4, firstClone]
+  // Real index 0 = visual position 1
+  var cur = 0; // real slide index (0-based among originals)
+  var pos = 1; // track position (accounting for prepended clone)
+  var isMoving = false;
+  var timer = null;
+  var sx = 0, sy = 0;
+
+  // Create dots
+  for (var d = 0; d < total; d++) {
+    var dot = document.createElement('button');
+    dot.className = 'carousel__dot' + (d === 0 ? ' carousel__dot--active' : '');
+    dot.setAttribute('aria-label', 'Slide ' + (d + 1));
+    dotsWrap.appendChild(dot);
+  }
+  var dots = dotsWrap.children;
+
+  // Set initial position (no animation)
+  track.style.transform = 'translateX(-' + pos * 100 + '%)';
+
+  function updateDots() {
+    for (var i = 0; i < dots.length; i++) {
+      dots[i].classList.toggle('carousel__dot--active', i === cur);
+    }
   }
 
-  function startAuto() {
-    stopAuto();
-    autoTimer = setInterval(() => goTo(current + 1), 4000);
+  function goTo(realIndex, animate) {
+    if (isMoving) return;
+
+    cur = ((realIndex % total) + total) % total;
+    pos = cur + 1; // +1 because of prepended clone
+
+    if (animate !== false) {
+      isMoving = true;
+      track.classList.add('carousel__track--animated');
+    } else {
+      track.classList.remove('carousel__track--animated');
+    }
+
+    track.style.transform = 'translateX(-' + pos * 100 + '%)';
+    updateDots();
   }
 
-  function stopAuto() {
-    clearInterval(autoTimer);
+  function goNext() {
+    if (isMoving) return;
+    isMoving = true;
+    pos++;
+    track.classList.add('carousel__track--animated');
+    track.style.transform = 'translateX(-' + pos * 100 + '%)';
+    cur = (cur + 1) % total;
+    updateDots();
   }
 
-  dots.forEach((dot, i) => {
-    dot.addEventListener('click', () => {
-      goTo(i);
-      startAuto();
-    });
+  function goPrev() {
+    if (isMoving) return;
+    isMoving = true;
+    pos--;
+    track.classList.add('carousel__track--animated');
+    track.style.transform = 'translateX(-' + pos * 100 + '%)';
+    cur = ((cur - 1) + total) % total;
+    updateDots();
+  }
+
+  // On transition end, jump if on clone
+  track.addEventListener('transitionend', function () {
+    isMoving = false;
+
+    // If on firstClone (past last real slide) -> jump to real first
+    if (pos === total + 1) {
+      track.classList.remove('carousel__track--animated');
+      pos = 1;
+      track.style.transform = 'translateX(-' + pos * 100 + '%)';
+    }
+
+    // If on lastClone (before first real slide) -> jump to real last
+    if (pos === 0) {
+      track.classList.remove('carousel__track--animated');
+      pos = total;
+      track.style.transform = 'translateX(-' + pos * 100 + '%)';
+    }
   });
 
-  // Touch support
-  track.addEventListener('touchstart', (e) => {
-    startX = e.touches[0].clientX;
-    isDragging = true;
-    stopAuto();
+  // Dot clicks
+  for (var i = 0; i < dots.length; i++) {
+    (function (idx) {
+      dots[idx].addEventListener('click', function () {
+        goTo(idx);
+        startAuto();
+      });
+    })(i);
+  }
+
+  // Auto play
+  function startAuto() {
+    clearInterval(timer);
+    timer = setInterval(goNext, 4000);
+  }
+
+  // Touch / Swipe
+  track.addEventListener('touchstart', function (e) {
+    sx = e.touches[0].clientX;
+    sy = e.touches[0].clientY;
+    clearInterval(timer);
   }, { passive: true });
 
-  track.addEventListener('touchend', (e) => {
-    if (!isDragging) return;
-    const diff = startX - e.changedTouches[0].clientX;
-    if (Math.abs(diff) > 50) {
-      goTo(diff > 0 ? current + 1 : current - 1);
+  track.addEventListener('touchmove', function (e) {
+    if (Math.abs(e.touches[0].clientX - sx) > Math.abs(e.touches[0].clientY - sy)) {
+      e.preventDefault();
     }
-    isDragging = false;
+  }, { passive: false });
+
+  track.addEventListener('touchend', function (e) {
+    var diff = sx - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 40) {
+      if (diff > 0) goNext(); else goPrev();
+    }
     startAuto();
   }, { passive: true });
 
-  goTo(0);
   startAuto();
 }
 
-/* ========== ANIMATED COUNTERS ========== */
-function initCounters() {
-  const cards = document.querySelectorAll('.stat-card');
-  if (cards.length === 0) return;
+/* ═══════════ PHONE ═══════════ */
+function initPhone() {
+  var el = document.getElementById('phone');
+  if (!el) return;
 
-  let animated = false;
-
-  function animateValue(el, target, duration) {
-    const start = performance.now();
-    function update(now) {
-      const progress = Math.min((now - start) / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 4); // easeOutQuart
-      el.textContent = Math.floor(eased * target);
-      if (progress < 1) requestAnimationFrame(update);
-    }
-    requestAnimationFrame(update);
+  function fmt(r) {
+    if (r.length > 9) r = r.slice(0, 9);
+    var o = '';
+    if (r.length > 0) o = r.slice(0, 2);
+    if (r.length > 2) o += ' ' + r.slice(2, 5);
+    if (r.length > 5) o += ' ' + r.slice(5, 7);
+    if (r.length > 7) o += ' ' + r.slice(7, 9);
+    return o;
   }
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting && !animated) {
-        animated = true;
-        cards.forEach(card => {
-          const valueEl = card.querySelector('.stat-card__value');
-          const target = parseInt(valueEl.dataset.target, 10);
-          animateValue(valueEl, target, 1600);
-        });
-        observer.disconnect();
+  el.addEventListener('input', function () { el.value = fmt(el.value.replace(/\D/g, '')); });
+
+  el.addEventListener('keydown', function (e) {
+    if (['Backspace','Delete','ArrowLeft','ArrowRight','Tab','Home','End'].indexOf(e.key) !== -1) return;
+    if (e.ctrlKey || e.metaKey) return;
+    if (!/^\d$/.test(e.key)) e.preventDefault();
+  });
+
+  el.addEventListener('paste', function (e) {
+    e.preventDefault();
+    var t = (e.clipboardData || window.clipboardData).getData('text').replace(/\D/g, '');
+    if (t.startsWith('998')) t = t.slice(3);
+    el.value = fmt(t);
+    el.dispatchEvent(new Event('input'));
+  });
+}
+
+/* ═══════════ FORM ═══════════ */
+function initForm() {
+  var form = document.getElementById('leadForm');
+  if (!form) return;
+
+  var name = document.getElementById('fullname');
+  var phone = document.getElementById('phone');
+  var nErr = document.getElementById('nameErr');
+  var pErr = document.getElementById('phoneErr');
+  var fields = document.getElementById('formFields');
+  var ok = document.getElementById('formOk');
+  var btn = document.getElementById('submitBtn');
+
+  function showE(inp, err) { inp.classList.add('inp--error'); err.classList.add('inp-err--show'); }
+  function hideE(inp, err) { inp.classList.remove('inp--error'); err.classList.remove('inp-err--show'); }
+
+  name.addEventListener('input', function () { hideE(name, nErr); });
+  phone.addEventListener('input', function () { hideE(phone, pErr); });
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var v = true;
+
+    if (name.value.trim().length < 2) { showE(name, nErr); v = false; } else hideE(name, nErr);
+    var dg = phone.value.replace(/\D/g, '');
+    if (dg.length < 9) { showE(phone, pErr); v = false; } else hideE(phone, pErr);
+    if (!v) return;
+
+    btn.classList.add('submit-btn--loading');
+
+    console.log('Form submitted:', {
+      fullname: name.value.trim(),
+      phone: '+998' + dg,
+      source: 'meta_ads_instagram',
+      ts: new Date().toISOString()
+    });
+
+    setTimeout(function () {
+      fields.style.display = 'none';
+      ok.classList.add('formbox__ok--show');
+    }, 1400);
+  });
+}
+
+/* ═══════════ COUNTERS ═══════════ */
+function initCounters() {
+  var els = document.querySelectorAll('[data-target]');
+  if (!els.length) return;
+  var done = false;
+
+  function ease(t) { return 1 - Math.pow(1 - t, 4); }
+
+  function anim(el, target) {
+    var s = performance.now();
+    (function tick(n) {
+      var p = Math.min((n - s) / 1600, 1);
+      el.textContent = Math.floor(ease(p) * target);
+      if (p < 1) requestAnimationFrame(tick);
+    })(s);
+  }
+
+  var obs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) {
+      if (en.isIntersecting && !done) {
+        done = true;
+        els.forEach(function (el) { anim(el, +el.getAttribute('data-target')); });
+        obs.disconnect();
       }
     });
   }, { threshold: 0.3 });
 
-  cards.forEach(card => observer.observe(card));
+  els.forEach(function (el) { obs.observe(el); });
 }
 
-/* ========== FADE-IN ANIMATION ========== */
-function initFadeIn() {
-  const els = document.querySelectorAll('.fade-in');
-  if (els.length === 0) return;
-
-  els.forEach((el, i) => {
-    setTimeout(() => {
-      el.classList.add('fade-in--visible');
-    }, i * 100);
-  });
-}
-
-/* ========== STICKY MOBILE BUTTON ========== */
+/* ═══════════ STICKY ═══════════ */
 function initSticky() {
-  const stickyBar = document.querySelector('.sticky-bar');
-  const form = document.getElementById('leadForm');
-  const stickyBtn = document.querySelector('.sticky-bar__btn');
-  if (!stickyBar || !form) return;
+  var sticky = document.getElementById('sticky');
+  var formBox = document.getElementById('formBox');
+  var btn = document.getElementById('stickyBtn');
+  if (!sticky || !formBox) return;
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
+  var obs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) {
       if (window.innerWidth <= 768) {
-        stickyBar.classList.toggle('sticky-bar--visible', !entry.isIntersecting);
+        sticky.classList.toggle('sticky--show', !en.isIntersecting);
       }
     });
-  }, { threshold: 0.1 });
+  }, { threshold: 0.05 });
 
-  observer.observe(form);
+  obs.observe(formBox);
 
-  if (stickyBtn) {
-    stickyBtn.addEventListener('click', () => {
-      form.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  if (btn) {
+    btn.addEventListener('click', function () {
+      formBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
     });
   }
 
-  window.addEventListener('resize', () => {
-    if (window.innerWidth > 768) {
-      stickyBar.classList.remove('sticky-bar--visible');
-    }
+  window.addEventListener('resize', function () {
+    if (window.innerWidth > 768) sticky.classList.remove('sticky--show');
   });
 }
 
-/* ========== VIDEO PLAY/PAUSE ========== */
+/* ═══════════ VIDEOS ═══════════ */
 function initVideos() {
-  const cards = document.querySelectorAll('.tcard');
-  if (cards.length === 0) return;
+  document.querySelectorAll('.vc').forEach(function (card) {
+    var v = card.querySelector('video');
+    var b = card.querySelector('.vc__play');
+    if (!v || !b) return;
 
-  cards.forEach(card => {
-    const video = card.querySelector('.tcard__video');
-    const playBtn = card.querySelector('.tcard__play');
-    const overlay = card.querySelector('.tcard__overlay');
-    if (!video || !playBtn) return;
+    function offOthers() {
+      document.querySelectorAll('.vc').forEach(function (c) {
+        if (c === card) return;
+        var ov = c.querySelector('video');
+        var ob = c.querySelector('.vc__play');
+        if (ov && !ov.paused) { ov.pause(); if (ob) ob.classList.remove('vc__play--hidden'); }
+      });
+    }
 
-    playBtn.addEventListener('click', () => {
-      if (video.paused) {
-        // Pause all other videos
-        document.querySelectorAll('.tcard__video').forEach(v => {
-          if (v !== video && !v.paused) {
-            v.pause();
-            v.closest('.tcard').querySelector('.tcard__play').classList.remove('tcard__play--hidden');
-            const ov = v.closest('.tcard').querySelector('.tcard__overlay');
-            if (ov) ov.classList.remove('tcard__overlay--hidden');
-          }
-        });
-        video.play();
-        playBtn.classList.add('tcard__play--hidden');
-        if (overlay) overlay.classList.add('tcard__overlay--hidden');
-      } else {
-        video.pause();
-        playBtn.classList.remove('tcard__play--hidden');
-        if (overlay) overlay.classList.remove('tcard__overlay--hidden');
-      }
-    });
+    function play() { offOthers(); v.play(); b.classList.add('vc__play--hidden'); }
+    function pause() { v.pause(); b.classList.remove('vc__play--hidden'); }
 
-    video.addEventListener('click', () => {
-      if (!video.paused) {
-        video.pause();
-        playBtn.classList.remove('tcard__play--hidden');
-        if (overlay) overlay.classList.remove('tcard__overlay--hidden');
-      }
-    });
-
-    video.addEventListener('ended', () => {
-      playBtn.classList.remove('tcard__play--hidden');
-      if (overlay) overlay.classList.remove('tcard__overlay--hidden');
-    });
+    b.addEventListener('click', function () { v.paused ? play() : pause(); });
+    v.addEventListener('click', function () { v.paused ? play() : pause(); });
+    v.addEventListener('ended', function () { b.classList.remove('vc__play--hidden'); });
   });
 }

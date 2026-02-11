@@ -3,144 +3,80 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Open Web Academy — UI/UX kursi. Professional IT ta'lim.">
   <title>UI/UX kursi — Open Web Academy</title>
-  <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400;500&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="icon" href="https://owa.uz/owa-logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
-  <!-- BG Decoration -->
-  <div class="bg-decor">
-    <svg viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="100" cy="300" r="200" fill="url(#g1)" opacity="0.3"/>
-      <circle cx="200" cy="350" r="150" fill="url(#g2)" opacity="0.2"/>
-      <defs>
-        <radialGradient id="g1"><stop stop-color="#FD482D"/><stop offset="1" stop-color="transparent"/></radialGradient>
-        <radialGradient id="g2"><stop stop-color="#FFDDD7"/><stop offset="1" stop-color="transparent"/></radialGradient>
-      </defs>
-    </svg>
-  </div>
-
-  <main class="container">
-
-    <!-- Carousel -->
-    <section class="carousel fade-in">
-      <div class="carousel__track">
-        <div class="carousel__slide"><img src="images/1.JPG" alt="OWA Academy"></div>
-        <div class="carousel__slide"><img src="images/2.JPG" alt="OWA Academy"></div>
-        <div class="carousel__slide"><img src="images/3.JPG" alt="OWA Academy"></div>
-        <div class="carousel__slide"><img src="images/4.JPG" alt="OWA Academy"></div>
-      </div>
-      <div class="carousel__dots">
-        <button class="carousel__dot carousel__dot--active" aria-label="Slide 1"></button>
-        <button class="carousel__dot" aria-label="Slide 2"></button>
-        <button class="carousel__dot" aria-label="Slide 3"></button>
-        <button class="carousel__dot" aria-label="Slide 4"></button>
-      </div>
-    </section>
-
-    <!-- Hero Section -->
-    <section class="hero fade-in">
-      <div class="hero__grid">
-
-        <!-- Form Column -->
-        <div class="hero__form-col">
-          <img src="https://owa.uz/owa-logo.png" alt="OWA Logo" class="hero__logo">
-          <h1 class="hero__title">
-            <span class="hero__title-accent">UI/UX</span>
-            kursi
-          </h1>
-          <p class="hero__desc">Raqamingizni qoldiring va biz barcha savollaringizga javob beramiz.</p>
-
-          <form class="form" id="leadForm">
-            <div id="formFields">
-              <div class="form__group">
-                <input type="text" class="form__input" id="fullname" placeholder="Ismingiz" autocomplete="name">
-                <div class="form__error" id="nameError">Ism kamida 2 belgidan iborat bo'lishi kerak</div>
+  <div class="page">
+    <div class="grid">
+      <div class="left">
+        <div class="formbox" id="formBox">
+          <img src="https://owa.uz/owa-logo.png" alt="OWA" class="formbox__logo">
+          <h1 class="hero-title"><span>UI/UX</span> <span class="hero-title__light">kursi</span></h1>
+          <div class="formbox__head">
+            <h2>Bepul konsultatsiya</h2>
+            <p>Raqamingizni qoldiring — biz bog'lanamiz</p>
+          </div>
+          <form id="leadForm" novalidate>
+            <div class="formbox__fields" id="formFields">
+              <div class="inp-wrap">
+                <input type="text" class="inp" id="fullname" placeholder="Ismingiz" autocomplete="name">
+                <span class="inp-err" id="nameErr">Kamida 2 belgi</span>
               </div>
-              <div class="form__group" style="margin-top: 14px;">
-                <div class="form__phone-wrap">
-                  <div class="form__phone-prefix">
-                    <span>&#127482;&#127487;</span> +998
-                  </div>
-                  <input type="tel" class="form__input form__input--phone" id="phone" placeholder="Telefon raqami" maxlength="12" autocomplete="tel">
+              <div class="inp-wrap">
+                <div class="inp-tel">
+                  <div class="inp-tel__pre">+998</div>
+                  <input type="tel" class="inp inp--tel" id="phone" placeholder="00 000 00 00" maxlength="12" autocomplete="tel">
                 </div>
-                <div class="form__error" id="phoneError">Telefon raqamini to'liq kiriting</div>
+                <span class="inp-err" id="phoneErr">Raqamni to'liq kiriting</span>
               </div>
-              <button type="submit" class="form__btn" style="margin-top: 14px;">Yuborish</button>
+              <button type="submit" class="submit-btn" id="submitBtn">
+                <span class="submit-btn__txt">Yuborish</span>
+                <span class="submit-btn__spin"></span>
+              </button>
             </div>
-            <div class="form__success" id="formSuccess">
-              <div class="form__success-icon">&#10003;</div>
-              <p class="form__success-text">Rahmat! Arizangiz qabul qilindi. Tez orada siz bilan bog'lanamiz.</p>
+            <div class="formbox__ok" id="formOk">
+              <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="23" stroke="#4CAF50" stroke-width="2"/><path d="M14 24l7 7 13-13" stroke="#4CAF50" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <strong>Rahmat!</strong>
+              <p>Arizangiz qabul qilindi. Tez orada bog'lanamiz.</p>
             </div>
           </form>
+          <a href="https://t.me/owacademy2" target="_blank" rel="noopener" class="tg-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0h-.056zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+            Telegramdan bog'lanish
+          </a>
         </div>
-
-        <!-- Stats Column -->
-        <div class="hero__stats">
-          <div class="stat-card">
-            <div class="stat-card__number">
-              <span class="stat-card__value" data-target="5">0</span>
-              <span class="stat-card__plus">+</span>
-            </div>
-            <div class="stat-card__label">Yillik tajriba</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-card__number">
-              <span class="stat-card__value" data-target="1700">0</span>
-              <span class="stat-card__plus">+</span>
-            </div>
-            <div class="stat-card__label">Faol talabalar</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-card__number">
-              <span class="stat-card__value" data-target="550">0</span>
-              <span class="stat-card__plus">+</span>
-            </div>
-            <div class="stat-card__label">Bitiruvchilar</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-card__number">
-              <span class="stat-card__value" data-target="8">0</span>
-              <span class="stat-card__plus">+</span>
-            </div>
-            <div class="stat-card__label">Faol kurslar</div>
-          </div>
+        <div class="contacts-bar">
+          <a href="tel:+998752200107" class="contacts-bar__item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg> 75-220-01-07</a>
+          <a href="https://t.me/owa_uz" target="_blank" rel="noopener" class="contacts-bar__item"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0h-.056zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg> @owauz</a>
+          <a href="https://www.instagram.com/owa.uz/" target="_blank" rel="noopener" class="contacts-bar__item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg> @owa.uz</a>
         </div>
-
       </div>
-    </section>
-
-    <!-- Social Links -->
-    <section class="social fade-in">
-      <div class="social__links">
-        <a href="https://t.me/owa_uz" target="_blank" class="social__link">
-          <img src="../telegram.png" alt="Telegram"> @owauz
-        </a>
-        <a href="https://www.instagram.com/owa.uz/" target="_blank" class="social__link">
-          <img src="../instagram.png" alt="Instagram"> @owa.uz
-        </a>
+      <div class="right">
+        <div class="carousel" id="carousel">
+          <div class="carousel__track" id="carouselTrack">
+            <div class="carousel__slide"><img src="images/1.JPG" alt="OWA"></div>
+            <div class="carousel__slide"><img src="images/2.JPG" alt="OWA"></div>
+            <div class="carousel__slide"><img src="images/3.JPG" alt="OWA"></div>
+            <div class="carousel__slide"><img src="images/4.JPG" alt="OWA"></div>
+          </div>
+          <div class="carousel__dots" id="carouselDots"></div>
+        </div>
+        <div class="stats">
+          <div class="stats__col"><div class="stats__val"><span data-target="5">0</span>+</div><div class="stats__lbl">Yillik tajriba</div></div>
+          <div class="stats__col"><div class="stats__val"><span data-target="1700">0</span>+</div><div class="stats__lbl">Faol talabalar</div></div>
+          <div class="stats__col"><div class="stats__val"><span data-target="550">0</span>+</div><div class="stats__lbl">Bitiruvchilar</div></div>
+          <div class="stats__col"><div class="stats__val"><span data-target="8">0</span>+</div><div class="stats__lbl">Faol kurslar</div></div>
+        </div>
       </div>
-      <a href="https://t.me/owacademy2" target="_blank" class="social__telegram-btn">
-        <img src="../telegram.png" alt="Telegram"> Telegramdan bog'lanish
-      </a>
-    </section>
-
-  </main>
-
-  <!-- Floating Phone Button -->
-  <div class="float-phone">
-    <div class="float-phone__popup">+998 75 220 01 07</div>
-    <a href="tel:+998752200107" class="float-phone__btn">
-      <img src="../phone.png" alt="Telefon">
-    </a>
+    </div>
   </div>
-
-  <!-- Sticky Mobile Button -->
-  <div class="sticky-bar">
-    <button class="sticky-bar__btn">Yuborish</button>
-  </div>
-
+  <div class="sticky" id="sticky"><button class="sticky__btn" id="stickyBtn">Ro'yxatdan o'tish</button></div>
   <script src="script.js"></script>
 </body>
 </html>
