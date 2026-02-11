@@ -604,6 +604,7 @@ button { cursor: pointer; }
   .grid {
     grid-template-columns: 1fr;
     gap: 20px;
+    padding-top: 12px;
   }
 
   .left {
