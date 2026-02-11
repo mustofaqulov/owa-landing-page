@@ -620,8 +620,12 @@ button { cursor: pointer; }
   }
 
   .stats {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
+
+  .stats__val { font-size: 1.8rem; }
+  .stats__lbl { font-size: 13px; }
+  .stats__col { padding: 20px 14px; }
 
   .testim__list {
     grid-template-columns: 1fr;
