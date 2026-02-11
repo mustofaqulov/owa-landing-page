@@ -1,48 +1,168 @@
 <!DOCTYPE html>
 <html lang="uz">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OWA Landing Pages</title>
-    <link rel="icon" href="https://owa.uz/owa-logo.png" type="image/png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        *{margin:0;padding:0;box-sizing:border-box}
-        body{font-family:'Inter',sans-serif;background:#f5f5f5;min-height:100vh}
-        .tabs{display:flex;justify-content:center;gap:4px;padding:12px 24px;background:#fff;border-bottom:1px solid #e5e7eb;overflow-x:auto;flex-wrap:nowrap}
-        .tabs::-webkit-scrollbar{display:none}
-        .tab{padding:8px 18px;border-radius:8px;font-size:.85rem;font-weight:500;cursor:pointer;border:none;background:transparent;color:#6b7280;white-space:nowrap;transition:all .2s}
-        .tab:hover{background:#f3f4f6;color:#1a1a2e}
-        .tab--active{background:#FD482D;color:#fff}
-        .tab--active:hover{background:#e03a1f;color:#fff}
-        .frame-wrap{flex:1;display:flex}
-        iframe{width:100%;height:calc(100vh - 52px);border:none}
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Open Web Academy — Kurslar</title>
+  <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400;500&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #FD482D;
+      --primary-dark: #E03A1F;
+      --primary-light: #FFDDD7;
+      --primary-bg: #FFF5F3;
+      --text: #1A1A2E;
+      --text-sub: #6B7280;
+      --text-muted: #9CA3AF;
+      --bg: #FFFFFF;
+      --bg-light: #F9FAFB;
+      --border: #E5E7EB;
+    }
+
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+    }
+
+    .logo {
+      height: 72px;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-family: 'Alexandria', sans-serif;
+      font-size: 36px;
+      font-weight: 500;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      color: var(--text-sub);
+      font-size: 16px;
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .courses-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
+      width: 100%;
+      max-width: 900px;
+    }
+
+    .course-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 20px 24px;
+      background: var(--bg-light);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      text-decoration: none;
+      color: var(--text);
+      transition: all 0.25s ease;
+    }
+
+    .course-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+      border-color: var(--primary-light);
+    }
+
+    .course-card__icon {
+      width: 48px;
+      height: 48px;
+      background: var(--primary-bg);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+
+    .course-card__name {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .course-card__arrow {
+      margin-left: auto;
+      color: var(--text-muted);
+      font-size: 18px;
+    }
+
+    @media (max-width: 480px) {
+      h1 { font-size: 28px; }
+      .courses-grid { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
-    <div class="tabs" id="tabs">
-        <button class="tab tab--active" data-src="frontend/index.html">Frontend</button>
-        <button class="tab" data-src="back-end/index.html">Back-end</button>
-        <button class="tab" data-src="ui-ux/index.html">UI/UX</button>
-        <button class="tab" data-src="grafik-dizayn/index.html">Grafik Dizayn</button>
-        <button class="tab" data-src="mobil-dasturlash/index.html">Mobil dasturlash</button>
-        <button class="tab" data-src="it-kids/index.html">IT Kids</button>
-        <button class="tab" data-src="foundation/index.html">Foundation</button>
-        <button class="tab" data-src="kompyuter-savodxonligi/index.html">Kompyuter Savodxonligi</button>
-    </div>
-    <div class="frame-wrap">
-        <iframe id="preview" src="frontend/index.html"></iframe>
-    </div>
-    <script>
-        const tabs = document.querySelectorAll(".tab");
-        const iframe = document.getElementById("preview");
-        tabs.forEach(t => t.addEventListener("click", () => {
-            tabs.forEach(b => b.classList.remove("tab--active"));
-            t.classList.add("tab--active");
-            iframe.src = t.dataset.src;
-        }));
-    </script>
+  <img src="https://owa.uz/owa-logo.png" alt="OWA Logo" class="logo">
+  <h1>Kurslarimiz</h1>
+  <p class="subtitle">Qiziqtirgan kursni tanlang</p>
+
+  <div class="courses-grid">
+    <a href="frontend/" class="course-card">
+      <div class="course-card__icon">&#128187;</div>
+      <span class="course-card__name">Frontend</span>
+      <span class="course-card__arrow">&#8594;</span>
+    </a>
+    <a href="back-end/" class="course-card">
+      <div class="course-card__icon">&#9881;</div>
+      <span class="course-card__name">Back-end</span>
+      <span class="course-card__arrow">&#8594;</span>
+    </a>
+    <a href="ui-ux/" class="course-card">
+      <div class="course-card__icon">&#127912;</div>
+      <span class="course-card__name">UI/UX</span>
+      <span class="course-card__arrow">&#8594;</span>
+    </a>
+    <a href="it-kids/" class="course-card">
+      <div class="course-card__icon">&#128103;</div>
+      <span class="course-card__name">IT KIDS</span>
+      <span class="course-card__arrow">&#8594;</span>
+    </a>
+    <a href="grafik-dizayn/" class="course-card">
+      <div class="course-card__icon">&#127752;</div>
+      <span class="course-card__name">Grafik Dizayn</span>
+      <span class="course-card__arrow">&#8594;</span>
+    </a>
+    <a href="kompyuter-savodxonligi/" class="course-card">
+      <div class="course-card__icon">&#128421;</div>
+      <span class="course-card__name">Kompyuter Savodxonligi</span>
+      <span class="course-card__arrow">&#8594;</span>
+    </a>
+    <a href="foundation/" class="course-card">
+      <div class="course-card__icon">&#128218;</div>
+      <span class="course-card__name">Foundation</span>
+      <span class="course-card__arrow">&#8594;</span>
+    </a>
+    <a href="mobil-dasturlash/" class="course-card">
+      <div class="course-card__icon">&#128241;</div>
+      <span class="course-card__name">Mobil dasturlash</span>
+      <span class="course-card__arrow">&#8594;</span>
+    </a>
+  </div>
 </body>
 </html>

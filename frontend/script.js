@@ -1,201 +1,308 @@
-/* ============================================
-   OWA Landing — JS
-   ============================================ */
-
-
-// Phone formatting
-function initPhone() {
-    document.querySelectorAll('input[type="tel"]').forEach(inp => {
-        inp.addEventListener("input", e => {
-            let v = e.target.value.replace(/\D/g, "").slice(0, 9);
-            let f = "";
-            if (v.length > 0) f += v.slice(0, 2);
-            if (v.length > 2) f += " " + v.slice(2, 5);
-            if (v.length > 5) f += " " + v.slice(5, 7);
-            if (v.length > 7) f += " " + v.slice(7, 9);
-            e.target.value = f;
-        });
-    });
-}
-
-// Form
-function initForm() {
-    const form = document.getElementById("heroForm");
-    const success = document.getElementById("formSuccess");
-    if (!form) return;
-
-    function submit() {
-        let ok = true;
-        const name = form.querySelector('[name="fullname"]');
-        const phone = form.querySelector('[name="phone"]');
-
-        const ng = name.closest(".form__group");
-        if (!name.value.trim() || name.value.trim().length < 2) {
-            ng.classList.add("form__group--error"); ok = false;
-        } else ng.classList.remove("form__group--error");
-
-        const pg = phone.closest(".form__group");
-        const digits = phone.value.replace(/\D/g, "");
-        if (digits.length < 9) {
-            pg.classList.add("form__group--error"); ok = false;
-        } else pg.classList.remove("form__group--error");
-
-        if (!ok) return;
-
-        const btn = form.querySelector("button[type=submit]");
-        btn.classList.add("form__btn--loading");
-        btn.disabled = true;
-
-        console.log("Lead:", {
-            fullname: name.value.trim(),
-            phone: "+998" + digits,
-            source: "meta_ads_instagram",
-            ts: new Date().toISOString()
-        });
-
-        setTimeout(() => {
-            form.style.display = "none";
-            success.style.display = "block";
-            success.style.animation = "fadeIn .4s ease";
-            const sticky = document.getElementById("stickyBtn");
-            if (sticky) sticky.classList.remove("sticky-btn--show");
-        }, 600);
-    }
-
-    form.addEventListener("submit", e => { e.preventDefault(); submit(); });
-
-    // Sticky button triggers form submit
-    const stickySubmit = document.getElementById("stickySubmit");
-    if (stickySubmit) {
-        stickySubmit.addEventListener("click", () => {
-            window.scrollTo({ top: 0, behavior: "smooth" });
-            setTimeout(submit, 400);
-        });
-    }
-
-    form.querySelectorAll("input, select").forEach(inp => {
-        inp.addEventListener("input", () => {
-            inp.closest(".form__group")?.classList.remove("form__group--error");
-        });
-        inp.addEventListener("change", () => {
-            inp.closest(".form__group")?.classList.remove("form__group--error");
-        });
-    });
-}
-
-// Carousel
-function initCarousel() {
-    const track = document.getElementById("carouselTrack");
-    const dots = document.querySelectorAll(".carousel__dot");
-    if (!track || !dots.length) return;
-
-    let current = 0;
-    const total = dots.length;
-
-    function goTo(i) {
-        current = i;
-        track.style.transform = `translateX(-${i * 100}%)`;
-        dots.forEach((d, idx) => d.classList.toggle("carousel__dot--active", idx === i));
-    }
-
-    dots.forEach(d => d.addEventListener("click", () => goTo(+d.dataset.index)));
-    setInterval(() => goTo((current + 1) % total), 4000);
-
-    let startX = 0;
-    const carousel = document.getElementById("carousel");
-    carousel.addEventListener("touchstart", e => { startX = e.touches[0].clientX; }, { passive: true });
-    carousel.addEventListener("touchend", e => {
-        const diff = startX - e.changedTouches[0].clientX;
-        if (Math.abs(diff) > 50) {
-            if (diff > 0) goTo(Math.min(current + 1, total - 1));
-            else goTo(Math.max(current - 1, 0));
-        }
-    }, { passive: true });
-}
-
-// Counters
-function initCounters() {
-    const nums = document.querySelectorAll(".stats__num[data-target]");
-    let done = false;
-    function go() {
-        if (done) return;
-        const sec = document.getElementById("stats");
-        if (!sec || sec.getBoundingClientRect().top > innerHeight * 0.9) return;
-        done = true;
-        nums.forEach(el => {
-            const target = +el.dataset.target;
-            const dur = 1600;
-            const start = performance.now();
-            (function tick(now) {
-                const p = Math.min((now - start) / dur, 1);
-                const ease = 1 - Math.pow(1 - p, 3);
-                el.textContent = Math.round(ease * target).toLocaleString();
-                if (p < 1) requestAnimationFrame(tick);
-            })(start);
-        });
-    }
-    window.addEventListener("scroll", go, { passive: true });
-    go();
-}
-
-// Fade-in on load
-function initFadeIn() {
-    const els = document.querySelectorAll(".anim-fade");
-    els.forEach((el, i) => {
-        setTimeout(() => el.classList.add("anim-fade--show"), 100 + i * 150);
-    });
-}
-
-// Video players
-function initVideos() {
-    document.querySelectorAll(".tcard__player").forEach(player => {
-        const video = player.querySelector("video");
-        const btn = player.querySelector(".tcard__play");
-        if (!video || !btn) return;
-
-        function toggle() {
-            if (video.paused) {
-                document.querySelectorAll(".tcard__player video").forEach(v => {
-                    if (v !== video && !v.paused) {
-                        v.pause();
-                        v.closest(".tcard__player").querySelector(".tcard__play").classList.remove("tcard__play--hidden");
-                    }
-                });
-                video.play();
-                btn.classList.add("tcard__play--hidden");
-            } else {
-                video.pause();
-                btn.classList.remove("tcard__play--hidden");
-            }
-        }
-
-        btn.addEventListener("click", toggle);
-        video.addEventListener("click", toggle);
-        video.addEventListener("ended", () => btn.classList.remove("tcard__play--hidden"));
-    });
-}
-
-// Sticky mobile button
-function initSticky() {
-    const sticky = document.getElementById("stickyBtn");
-    const formBtn = document.getElementById("submitBtn");
-    if (!sticky || !formBtn) return;
-
-    function check() {
-        const rect = formBtn.getBoundingClientRect();
-        const hidden = rect.bottom < 0 || rect.top > innerHeight;
-        sticky.classList.toggle("sticky-btn--show", hidden);
-    }
-    window.addEventListener("scroll", check, { passive: true });
-    check();
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-    initPhone();
-    initForm();
-    initCarousel();
-    initCounters();
-    initFadeIn();
-    initVideos();
-    initSticky();
+document.addEventListener('DOMContentLoaded', function () {
+  try { initCarousel(); } catch (e) { console.error(e); }
+  try { initPhone(); } catch (e) { console.error(e); }
+  try { initForm(); } catch (e) { console.error(e); }
+  try { initCounters(); } catch (e) { console.error(e); }
+  try { initSticky(); } catch (e) { console.error(e); }
+  try { initVideos(); } catch (e) { console.error(e); }
 });
+
+/* ═══════════ INFINITE CAROUSEL ═══════════ */
+function initCarousel() {
+  var track = document.getElementById('carouselTrack');
+  var dotsWrap = document.getElementById('carouselDots');
+  if (!track || !dotsWrap) return;
+
+  var origSlides = track.querySelectorAll('.carousel__slide');
+  var total = origSlides.length;
+  if (total === 0) return;
+
+  // Clone first and last for infinite loop
+  var firstClone = origSlides[0].cloneNode(true);
+  var lastClone = origSlides[total - 1].cloneNode(true);
+  firstClone.classList.add('carousel__slide--clone');
+  lastClone.classList.add('carousel__slide--clone');
+
+  track.appendChild(firstClone);
+  track.insertBefore(lastClone, origSlides[0]);
+
+  // Now slides = [lastClone, 1, 2, 3, 4, firstClone]
+  // Real index 0 = visual position 1
+  var cur = 0; // real slide index (0-based among originals)
+  var pos = 1; // track position (accounting for prepended clone)
+  var isMoving = false;
+  var timer = null;
+  var sx = 0, sy = 0;
+
+  // Create dots
+  for (var d = 0; d < total; d++) {
+    var dot = document.createElement('button');
+    dot.className = 'carousel__dot' + (d === 0 ? ' carousel__dot--active' : '');
+    dot.setAttribute('aria-label', 'Slide ' + (d + 1));
+    dotsWrap.appendChild(dot);
+  }
+  var dots = dotsWrap.children;
+
+  // Set initial position (no animation)
+  track.style.transform = 'translateX(-' + pos * 100 + '%)';
+
+  function updateDots() {
+    for (var i = 0; i < dots.length; i++) {
+      dots[i].classList.toggle('carousel__dot--active', i === cur);
+    }
+  }
+
+  function goTo(realIndex, animate) {
+    if (isMoving) return;
+
+    cur = ((realIndex % total) + total) % total;
+    pos = cur + 1; // +1 because of prepended clone
+
+    if (animate !== false) {
+      isMoving = true;
+      track.classList.add('carousel__track--animated');
+    } else {
+      track.classList.remove('carousel__track--animated');
+    }
+
+    track.style.transform = 'translateX(-' + pos * 100 + '%)';
+    updateDots();
+  }
+
+  function goNext() {
+    if (isMoving) return;
+    isMoving = true;
+    pos++;
+    track.classList.add('carousel__track--animated');
+    track.style.transform = 'translateX(-' + pos * 100 + '%)';
+    cur = (cur + 1) % total;
+    updateDots();
+  }
+
+  function goPrev() {
+    if (isMoving) return;
+    isMoving = true;
+    pos--;
+    track.classList.add('carousel__track--animated');
+    track.style.transform = 'translateX(-' + pos * 100 + '%)';
+    cur = ((cur - 1) + total) % total;
+    updateDots();
+  }
+
+  // On transition end, jump if on clone
+  track.addEventListener('transitionend', function () {
+    isMoving = false;
+
+    // If on firstClone (past last real slide) -> jump to real first
+    if (pos === total + 1) {
+      track.classList.remove('carousel__track--animated');
+      pos = 1;
+      track.style.transform = 'translateX(-' + pos * 100 + '%)';
+    }
+
+    // If on lastClone (before first real slide) -> jump to real last
+    if (pos === 0) {
+      track.classList.remove('carousel__track--animated');
+      pos = total;
+      track.style.transform = 'translateX(-' + pos * 100 + '%)';
+    }
+  });
+
+  // Dot clicks
+  for (var i = 0; i < dots.length; i++) {
+    (function (idx) {
+      dots[idx].addEventListener('click', function () {
+        goTo(idx);
+        startAuto();
+      });
+    })(i);
+  }
+
+  // Auto play
+  function startAuto() {
+    clearInterval(timer);
+    timer = setInterval(goNext, 4000);
+  }
+
+  // Touch / Swipe
+  track.addEventListener('touchstart', function (e) {
+    sx = e.touches[0].clientX;
+    sy = e.touches[0].clientY;
+    clearInterval(timer);
+  }, { passive: true });
+
+  track.addEventListener('touchmove', function (e) {
+    if (Math.abs(e.touches[0].clientX - sx) > Math.abs(e.touches[0].clientY - sy)) {
+      e.preventDefault();
+    }
+  }, { passive: false });
+
+  track.addEventListener('touchend', function (e) {
+    var diff = sx - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 40) {
+      if (diff > 0) goNext(); else goPrev();
+    }
+    startAuto();
+  }, { passive: true });
+
+  startAuto();
+}
+
+/* ═══════════ PHONE ═══════════ */
+function initPhone() {
+  var el = document.getElementById('phone');
+  if (!el) return;
+
+  function fmt(r) {
+    if (r.length > 9) r = r.slice(0, 9);
+    var o = '';
+    if (r.length > 0) o = r.slice(0, 2);
+    if (r.length > 2) o += ' ' + r.slice(2, 5);
+    if (r.length > 5) o += ' ' + r.slice(5, 7);
+    if (r.length > 7) o += ' ' + r.slice(7, 9);
+    return o;
+  }
+
+  el.addEventListener('input', function () { el.value = fmt(el.value.replace(/\D/g, '')); });
+
+  el.addEventListener('keydown', function (e) {
+    if (['Backspace','Delete','ArrowLeft','ArrowRight','Tab','Home','End'].indexOf(e.key) !== -1) return;
+    if (e.ctrlKey || e.metaKey) return;
+    if (!/^\d$/.test(e.key)) e.preventDefault();
+  });
+
+  el.addEventListener('paste', function (e) {
+    e.preventDefault();
+    var t = (e.clipboardData || window.clipboardData).getData('text').replace(/\D/g, '');
+    if (t.startsWith('998')) t = t.slice(3);
+    el.value = fmt(t);
+    el.dispatchEvent(new Event('input'));
+  });
+}
+
+/* ═══════════ FORM ═══════════ */
+function initForm() {
+  var form = document.getElementById('leadForm');
+  if (!form) return;
+
+  var name = document.getElementById('fullname');
+  var phone = document.getElementById('phone');
+  var nErr = document.getElementById('nameErr');
+  var pErr = document.getElementById('phoneErr');
+  var fields = document.getElementById('formFields');
+  var ok = document.getElementById('formOk');
+  var btn = document.getElementById('submitBtn');
+
+  function showE(inp, err) { inp.classList.add('inp--error'); err.classList.add('inp-err--show'); }
+  function hideE(inp, err) { inp.classList.remove('inp--error'); err.classList.remove('inp-err--show'); }
+
+  name.addEventListener('input', function () { hideE(name, nErr); });
+  phone.addEventListener('input', function () { hideE(phone, pErr); });
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var v = true;
+
+    if (name.value.trim().length < 2) { showE(name, nErr); v = false; } else hideE(name, nErr);
+    var dg = phone.value.replace(/\D/g, '');
+    if (dg.length < 9) { showE(phone, pErr); v = false; } else hideE(phone, pErr);
+    if (!v) return;
+
+    btn.classList.add('submit-btn--loading');
+
+    console.log('Form submitted:', {
+      fullname: name.value.trim(),
+      phone: '+998' + dg,
+      source: 'meta_ads_instagram',
+      ts: new Date().toISOString()
+    });
+
+    setTimeout(function () {
+      fields.style.display = 'none';
+      ok.classList.add('formbox__ok--show');
+    }, 1400);
+  });
+}
+
+/* ═══════════ COUNTERS ═══════════ */
+function initCounters() {
+  var els = document.querySelectorAll('[data-target]');
+  if (!els.length) return;
+  var done = false;
+
+  function ease(t) { return 1 - Math.pow(1 - t, 4); }
+
+  function anim(el, target) {
+    var s = performance.now();
+    (function tick(n) {
+      var p = Math.min((n - s) / 1600, 1);
+      el.textContent = Math.floor(ease(p) * target);
+      if (p < 1) requestAnimationFrame(tick);
+    })(s);
+  }
+
+  var obs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) {
+      if (en.isIntersecting && !done) {
+        done = true;
+        els.forEach(function (el) { anim(el, +el.getAttribute('data-target')); });
+        obs.disconnect();
+      }
+    });
+  }, { threshold: 0.3 });
+
+  els.forEach(function (el) { obs.observe(el); });
+}
+
+/* ═══════════ STICKY ═══════════ */
+function initSticky() {
+  var sticky = document.getElementById('sticky');
+  var formBox = document.getElementById('formBox');
+  var btn = document.getElementById('stickyBtn');
+  if (!sticky || !formBox) return;
+
+  var obs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) {
+      if (window.innerWidth <= 768) {
+        sticky.classList.toggle('sticky--show', !en.isIntersecting);
+      }
+    });
+  }, { threshold: 0.05 });
+
+  obs.observe(formBox);
+
+  if (btn) {
+    btn.addEventListener('click', function () {
+      formBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+  }
+
+  window.addEventListener('resize', function () {
+    if (window.innerWidth > 768) sticky.classList.remove('sticky--show');
+  });
+}
+
+/* ═══════════ VIDEOS ═══════════ */
+function initVideos() {
+  document.querySelectorAll('.vc').forEach(function (card) {
+    var v = card.querySelector('video');
+    var b = card.querySelector('.vc__play');
+    if (!v || !b) return;
+
+    function offOthers() {
+      document.querySelectorAll('.vc').forEach(function (c) {
+        if (c === card) return;
+        var ov = c.querySelector('video');
+        var ob = c.querySelector('.vc__play');
+        if (ov && !ov.paused) { ov.pause(); if (ob) ob.classList.remove('vc__play--hidden'); }
+      });
+    }
+
+    function play() { offOthers(); v.play(); b.classList.add('vc__play--hidden'); }
+    function pause() { v.pause(); b.classList.remove('vc__play--hidden'); }
+
+    b.addEventListener('click', function () { v.paused ? play() : pause(); });
+    v.addEventListener('click', function () { v.paused ? play() : pause(); });
+    v.addEventListener('ended', function () { b.classList.remove('vc__play--hidden'); });
+  });
+}

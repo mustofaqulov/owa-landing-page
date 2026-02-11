@@ -1,181 +1,117 @@
 <!DOCTYPE html>
 <html lang="uz">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Open Web Academy — IT kurslar</title>
-    <meta name="description" content="Open Web Academy — IT kasblarni o'rganing. Frontend, Backend, Mobile, Design kurslar.">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400;500&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="icon" href="https://owa.uz/owa-logo.png" type="image/png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Open Web Academy — Frontend kursi. Professional IT ta'lim.">
+  <title>Frontend kursi — Open Web Academy</title>
+  <link rel="icon" href="https://owa.uz/owa-logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-    <!-- Decorative BG -->
-    <div class="bg-decor">
-        <svg class="bg-decor__svg" viewBox="0 0 400 600" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M-50 300 Q 50 200, 0 100 Q -50 0, 50 -50" stroke="rgba(253,72,45,0.07)" stroke-width="80" fill="none" stroke-linecap="round"/>
-            <path d="M-100 500 Q 0 400, -50 300 Q -100 200, 0 100" stroke="rgba(253,72,45,0.04)" stroke-width="80" fill="none" stroke-linecap="round"/>
-        </svg>
+  <div class="page">
+
+    <div class="grid">
+
+      <!-- LEFT: Form + Social -->
+      <div class="left">
+        <div class="formbox" id="formBox">
+          <img src="https://owa.uz/owa-logo.png" alt="OWA" class="formbox__logo">
+          <h1 class="hero-title"><span>FRONTEND</span> <span class="hero-title__light">kursi</span></h1>
+          <div class="formbox__head">
+            <h2>Bepul konsultatsiya</h2>
+            <p>Raqamingizni qoldiring — biz bog'lanamiz</p>
+          </div>
+          <form id="leadForm" novalidate>
+            <div class="formbox__fields" id="formFields">
+              <div class="inp-wrap">
+                <input type="text" class="inp" id="fullname" placeholder="Ismingiz" autocomplete="name">
+                <span class="inp-err" id="nameErr">Kamida 2 belgi</span>
+              </div>
+              <div class="inp-wrap">
+                <div class="inp-tel">
+                  <div class="inp-tel__pre">+998</div>
+                  <input type="tel" class="inp inp--tel" id="phone" placeholder="00 000 00 00" maxlength="12" autocomplete="tel">
+                </div>
+                <span class="inp-err" id="phoneErr">Raqamni to'liq kiriting</span>
+              </div>
+              <button type="submit" class="submit-btn" id="submitBtn">
+                <span class="submit-btn__txt">Yuborish</span>
+                <span class="submit-btn__spin"></span>
+              </button>
+            </div>
+            <div class="formbox__ok" id="formOk">
+              <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="23" stroke="#4CAF50" stroke-width="2"/><path d="M14 24l7 7 13-13" stroke="#4CAF50" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <strong>Rahmat!</strong>
+              <p>Arizangiz qabul qilindi. Tez orada bog'lanamiz.</p>
+            </div>
+          </form>
+          <a href="https://t.me/owacademy2" target="_blank" rel="noopener" class="tg-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0h-.056zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+            Telegramdan bog'lanish
+          </a>
+        </div>
+        <div class="contacts-bar">
+          <a href="tel:+998752200107" class="contacts-bar__item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+            75-220-01-07
+          </a>
+          <a href="https://t.me/owa_uz" target="_blank" rel="noopener" class="contacts-bar__item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0h-.056zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+            @owauz
+          </a>
+          <a href="https://www.instagram.com/owa.uz/" target="_blank" rel="noopener" class="contacts-bar__item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            @owa.uz
+          </a>
+        </div>
+      </div>
+
+      <!-- RIGHT: Carousel + Stats -->
+      <div class="right">
+        <div class="carousel" id="carousel">
+          <div class="carousel__track" id="carouselTrack">
+            <div class="carousel__slide"><img src="images/1.JPG" alt="OWA"></div>
+            <div class="carousel__slide"><img src="images/2.JPG" alt="OWA"></div>
+            <div class="carousel__slide"><img src="images/3.JPG" alt="OWA"></div>
+            <div class="carousel__slide"><img src="images/4.png" alt="OWA"></div>
+          </div>
+          <div class="carousel__dots" id="carouselDots"></div>
+        </div>
+
+        <div class="stats">
+          <div class="stats__col">
+            <div class="stats__val"><span data-target="5">0</span>+</div>
+            <div class="stats__lbl">Yillik tajriba</div>
+          </div>
+          <div class="stats__col">
+            <div class="stats__val"><span data-target="1700">0</span>+</div>
+            <div class="stats__lbl">Faol talabalar</div>
+          </div>
+          <div class="stats__col">
+            <div class="stats__val"><span data-target="550">0</span>+</div>
+            <div class="stats__lbl">Bitiruvchilar</div>
+          </div>
+          <div class="stats__col">
+            <div class="stats__val"><span data-target="8">0</span>+</div>
+            <div class="stats__lbl">Faol kurslar</div>
+          </div>
+        </div>
+      </div>
+
     </div>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <a href="https://owa.uz" target="_blank" class="logo anim-fade">
-                <img src="https://owa.uz/owa-logo.png" alt="Open Web Academy" class="logo__img">
-            </a>
-        </div>
-        <div class="container hero__inner">
+  </div>
 
-            <!-- Left: Form Side -->
-            <div class="hero__left anim-fade">
-                <h1 class="hero__title">
-                    <span class="hero__title--accent" style="display:inline">Frontend</span>
-                    <span> kursi</span>
-                </h1>
-                <p class="hero__desc">Raqamingizni qoldiring va biz barcha savollaringizga javob beramiz.</p>
 
-                <form id="heroForm" class="form" novalidate>
-                    <div class="form__group">
-                        <input type="text" id="name1" name="fullname" placeholder="Ismingiz" required>
-                        <span class="form__err">Ismingizni kiriting</span>
-                    </div>
+  <div class="sticky" id="sticky">
+    <button class="sticky__btn" id="stickyBtn">Ro'yxatdan o'tish</button>
+  </div>
 
-                    <div class="form__group">
-                        <div class="phone-input">
-                            <div class="phone-input__left">
-                                <span class="phone-input__code">+998</span>
-                            </div>
-                            <input type="tel" id="phone1" name="phone" placeholder="Telefon raqami" maxlength="12" required>
-                        </div>
-                        <span class="form__err">Telefon raqamingizni kiriting</span>
-                    </div>
-
-                    <button type="submit" class="form__btn" id="submitBtn">
-                        <span>Yuborish</span>
-                    </button>
-
-                </form>
-
-                <a href="https://t.me/owacademy2" target="_blank" class="socials__btn">Telegramdan yozish</a>
-
-                <div class="socials">
-                    <div class="socials__inner">
-                        <a href="tel:+998752200107" class="socials__link">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.362 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0122 16.92z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                            <span>75-220-01-07</span>
-                        </a>
-                        <a href="https://t.me/owa_uz" target="_blank" class="socials__link">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21.2 4.4L2.4 11.2c-.6.2-.6 1.1 0 1.3l4.3 1.6 1.6 5.1c.2.5.8.7 1.2.4l2.3-1.9 4.5 3.3c.5.4 1.2.1 1.3-.5L21.9 5.2c.2-.7-.3-1-.7-.8zM8.5 13.5l8.5-5.2-6.6 6-.6 3.2-1.3-4z" fill="currentColor"/></svg>
-                            <span>@owauz</span>
-                        </a>
-                        <a href="https://www.instagram.com/owa.uz/" target="_blank" class="socials__link">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/></svg>
-                            <span>@owa.uz</span>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Success State -->
-                <div class="form-success" id="formSuccess">
-                    <svg width="64" height="64" fill="none" viewBox="0 0 64 64"><circle cx="32" cy="32" r="32" fill="#FD482D" opacity=".1"/><path d="M20 32l9 9 16-18" stroke="#FD482D" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    <h3>Rahmat!</h3>
-                    <p>Arizangiz qabul qilindi. Tez orada siz bilan bog'lanamiz.</p>
-                </div>
-            </div>
-
-            <!-- Right: Statistics -->
-            <div class="hero__right anim-fade" id="stats">
-                <div class="hero-stats">
-                    <div class="hero-stats__item">
-                        <div class="stats__row"><strong class="stats__num" data-target="5">0</strong><span class="stats__plus">+</span></div>
-                        <p>Yillik tajriba</p>
-                    </div>
-                    <div class="hero-stats__item">
-                        <div class="stats__row"><strong class="stats__num" data-target="1700">0</strong><span class="stats__plus">+</span></div>
-                        <p>Faol talabalar</p>
-                    </div>
-                    <div class="hero-stats__item">
-                        <div class="stats__row"><strong class="stats__num" data-target="550">0</strong><span class="stats__plus">+</span></div>
-                        <p>Bitiruvchilar</p>
-                    </div>
-                    <div class="hero-stats__item">
-                        <div class="stats__row"><strong class="stats__num" data-target="8">0</strong><span class="stats__plus">+</span></div>
-                        <p>Faol kurslar</p>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- Slider -->
-    <section class="top-slider anim-fade">
-        <div class="container">
-            <div class="carousel" id="carousel">
-                <div class="carousel__track" id="carouselTrack">
-                    <div class="carousel__slide">
-                        <img src="images/1.JPG" alt="OWA kurs rasmi 1" class="carousel__img">
-                    </div>
-                    <div class="carousel__slide">
-                        <img src="images/2.JPG" alt="OWA kurs rasmi 2" class="carousel__img">
-                    </div>
-                    <div class="carousel__slide">
-                        <img src="images/3.JPG" alt="OWA kurs rasmi 3" class="carousel__img">
-                    </div>
-                    <div class="carousel__slide">
-                        <img src="images/4.JPG" alt="OWA kurs rasmi 4" class="carousel__img">
-                    </div>
-                </div>
-                <div class="carousel__dots" id="carouselDots">
-                    <button class="carousel__dot carousel__dot--active" data-index="0"></button>
-                    <button class="carousel__dot" data-index="1"></button>
-                    <button class="carousel__dot" data-index="2"></button>
-                    <button class="carousel__dot" data-index="3"></button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonials -->
-    <section class="testimonials anim-fade">
-        <div class="container">
-            <h2 class="testimonials__heading" style="text-align:left">Bitiruvchilarimiz natijalari</h2>
-            <div class="testimonials__grid testimonials__grid--single">
-                <div class="tcard">
-                    <div class="tcard__player">
-                        <video src="video/Ozodbek.mp4" playsinline preload="metadata"></video>
-                        <button class="tcard__play" aria-label="Play">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 3l14 9-14 9V3z" fill="#fff"/></svg>
-                        </button>
-                    </div>
-                    <div class="tcard__badge">Frontend</div>
-                    <h3 class="tcard__name">Ozodbek</h3>
-                    <p class="tcard__result">O'z ish joyi, kuchli portfolio va oylik daromadga ega</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Sticky Mobile Button -->
-    <div class="sticky-btn" id="stickyBtn">
-        <button class="sticky-btn__inner" type="button" id="stickySubmit">Yuborish</button>
-    </div>
-
-    <!-- Floating Phone Button -->
-    <div class="float-phone" id="floatPhone">
-        <a href="tel:+998752200107" class="float-phone__btn" aria-label="Telefon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.362 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0122 16.92z" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
-        <div class="float-phone__popup">
-            <span class="float-phone__label">Qo'ng'iroq qiling</span>
-            <a href="tel:+998752200107" class="float-phone__number">+998 75 220 01 07</a>
-        </div>
-    </div>
-
-    <script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
