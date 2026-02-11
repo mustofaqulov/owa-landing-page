@@ -70,7 +70,9 @@ button { cursor: pointer; }
 
 .hero-title .hero-title__light {
   color: var(--text);
-  font-weight: 700;
+  font-weight: 500;
+  font-size: 32px;
+  display: block;
 }
 
 /* ═══════════ MAIN GRID ═══════════ */
