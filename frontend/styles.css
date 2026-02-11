@@ -32,6 +32,10 @@ body {
   color: var(--text);
   overflow-x: hidden;
   line-height: 1.5;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 img { max-width: 100%; display: block; }
@@ -40,10 +44,10 @@ button, input { font-family: inherit; border: none; outline: none; }
 button { cursor: pointer; }
 
 .page {
+  width: 100%;
   max-width: 1100px;
-  margin: 0 auto;
-  padding: 0 24px;
-  padding-bottom: env(safe-area-inset-bottom, 0);
+  padding: 24px;
+  padding-bottom: env(safe-area-inset-bottom, 24px);
 }
 
 /* ═══════════ HERO TITLE & LOGO ═══════════ */
@@ -84,9 +88,6 @@ button { cursor: pointer; }
   gap: 24px;
   align-items: stretch;
   justify-content: center;
-  padding-top: 32px;
-  margin-bottom: 40px;
-  min-height: 680px;
 }
 
 .left {
