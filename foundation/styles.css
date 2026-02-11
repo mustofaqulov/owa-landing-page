@@ -598,10 +598,28 @@ button { cursor: pointer; }
 
   .formbox__logo {
     height: 64px;
+    align-self: center;
   }
 
   .hero-title {
     font-size: 36px;
+    text-align: center;
+  }
+
+  .formbox__head {
+    text-align: center;
+  }
+
+  .formbox {
+    align-items: center;
+  }
+
+  .formbox__fields {
+    width: 100%;
+  }
+
+  .contacts-bar {
+    justify-content: center;
   }
 
   .grid {
